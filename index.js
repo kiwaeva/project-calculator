@@ -1,3 +1,20 @@
+let display = document.getElementsByClassName("screen")[0];
+let buttons = document.getElementsByClassName("btn");
+let displayValue = "";
+
+
+let populate = (number) => {
+    displayValue += number;
+    display.textContent = displayValue;
+}
+
+for(let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click',(event) => {
+    let number = event.target.textContent;
+    populate(number);
+})
+};
+
 let add = (a,b) => {
     return a + b
 };
