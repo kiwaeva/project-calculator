@@ -1,3 +1,13 @@
+//State variables
+let firstNum = '';
+let secondNum = '';
+let operator = '';
+let displayValue = '';
+let display = document.getElementsByClassName("screen")[0];
+let buttons = document.getElementsByClassName("btn");
+
+
+//Functions
 let add = (a, b) => {
     return a + b;
 };
@@ -14,10 +24,6 @@ let divide = (a, b) => {
     return a / b;
 };
 
-let firstNum = '';
-let secondNum = '';
-let operator = '';
-
 let operate = (operator, a, b) => {
     if (operator === '+') {
         return add(a, b);
@@ -30,16 +36,13 @@ let operate = (operator, a, b) => {
     }
 };
 
-let display = document.getElementsByClassName("screen")[0];
-let buttons = document.getElementsByClassName("btn");
-let displayValue = "";
-
-
 let populate = (number) => {
     displayValue += number;
     display.textContent = displayValue;
 };
 
+
+//Event listeners
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', (event) => {
         let number = event.target.textContent;
