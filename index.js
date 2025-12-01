@@ -43,36 +43,57 @@ let populate = (number) => {
 };
 
 
-//Event listeners
+// Event listeners
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', (event) => {
-        let value = event.target.textContent; // targets the text content within the buttons element 
+        let value = event.target.textContent;
 
-    // Detect button values
+        // Number buttons
         if (!isNaN(value)) {
             populate(value);
-        } else if (value === '+' || value === '-' || value === '*' || value === '/'){
-            firstNum = displayValue;
-            operator = value;
-            displayValue  = ''; 
-            display.textContent = '';
-        } else if(value === '='){
-            secondNum = displayValue;
-            let result = (operate(operator, Number(firstNum), Number(secondNum)));
-            displayValue = result;
-            display.value = displayValue; //.value for input fiels otherwise .textContent
+        } else if (value === '.') {
+            if (!displayValue.includes('.')) {
+                if (displayValue === '') {
+                    populate('0.');
+                } else {
+                    populate('.');
+                }
+            }
+        } else if (value === '+' || value === '-' || value === '*' || value === '/') {
 
-            //store result as a firstNum for the next calculation
-            firstNum = result; 
-        } else if (value === "AC"){
-            //reset all of the values 
+            //User typed a number - store it as firstNum
+            if (displayValue !== "") {
+                firstNum = displayValue;
+                displayValue = '';
+            }
+
+            //User pressed operator twice - simply replace operator
+            operator = value;
+            display.value = '';
+        }
+
+        // Equals button
+        else if (value === '=') {
+            secondNum = displayValue;
+
+            // Only calculate if both numbers exist
+            if (firstNum !== '' && secondNum !== '') {
+                let result = operate(operator, Number(firstNum), Number(secondNum));
+                displayValue = result;
+                display.value = displayValue;
+
+                // Store result as new firstNum for chaining calculations
+                firstNum = result;
+            }
+        }
+
+        // Clear button
+        else if (value === "AC") {
             displayValue = '';
             firstNum = '';
             secondNum = '';
             operator = '';
-            display.value = displayValue;
+            display.value = '';
         }
     });
-};
-
-//store values 
+}
